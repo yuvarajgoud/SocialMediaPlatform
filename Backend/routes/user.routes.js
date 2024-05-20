@@ -19,12 +19,9 @@ router.get('/login', (req, res) => {
 
 router.post('/auth/signup', async (req, res) => {
     const { username, password, email } = req.body;
-
-
     if (!username || !password || !email) {
         return res.status(400).send({ message: "All fields are required" });
     }
-
     try {
         const newUser = new user({ username, password, email });
         await newUser.save();
