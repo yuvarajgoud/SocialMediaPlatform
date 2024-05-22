@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config()
 const port = 3000;
 const userRouter = require('./routes/user.routes');
 const postRouter = require('./routes/post.routes');
@@ -9,9 +10,12 @@ const path = require('path');
 app.use(express.json());
 
 
-mongoose.connect('mongodb://localhost:27017/PROJECTDB', { useNewUrlParser: true, useUnifiedTopology: true })
+
+mongoose.connect(`mongodb+srv://yuvarajgoud:${process.env.MONGO_PASSWORD}@cluster0.max3jj3.mongodb.net/`)
     .then(() => {
         console.log('Connected to MongoDB');
+    }).catch((err)=>{
+        console.log(err)
     })
 
 app.get('/', (req, res) => {
@@ -28,4 +32,3 @@ app.use('/api/posts', postRouter);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
