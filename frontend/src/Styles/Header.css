@@ -1,0 +1,28 @@
+
+header {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+header a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+
+header a:hover {
+  text-decoration: underline;
+}

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const jwtSecret = 'secret_key';
 
-const user = require('../models/user.model');
+const User = require('../models/User.model');
 
 router.use(bodyParser.json());
 
@@ -21,20 +21,29 @@ router.use(bodyParser.json());
 
 
 router.post('/auth/signup', async (req, res) => {
+    
     const { username, password, email } = req.body;
 
-
+    // If Any field id given Empty
     if (!username || !password || !email) {
         return res.status(400).send({ message: "All fields are required" });
     }
-
+    
+    // If username already exists
+    const user = await User.findOne({username:username})
+    if(user){
+        res.status(400).json({ success: false, message: "Username already exists" });
+        return;
+    }
+    
     try {
-        const newUser = new user({ username, password, email });
+        const newUser = new User({ username, password, email });
         await newUser.save();
-
-        res.status(201).send({ success: true, message: "User registered successfully", user: newUser});
+        res.status(201).json({ success: true, message: "User registered successfully", user: newUser});
+        return;
     } catch (error) {
-        res.status(400).send({ success: false, message: "Error registering user", error: error.message });
+        res.status(400).json({ success: false, message: "Error registering user", error: error.message });
+        return;
     }
 });
 
@@ -42,7 +51,7 @@ router.post('/auth/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const foundUser = await user.findOne({ username: username });
+        const foundUser = await User.findOne({ username: username });
         if (!foundUser) {
             return res.status(404).send({ message: "User not found" });
         }
@@ -65,7 +74,7 @@ router.post('/auth/login', async (req, res) => {
 router.get('/users/:username', async (req, res) => {
     const username = req.params.username;
     try {
-        const userProfile = await user.findOne({ username: username });
+        const userProfile = await User.findOne({ username: username });
         if (!userProfile) {
             return res.status(404).send({ message: "User not found" });
         }
@@ -80,7 +89,7 @@ router.put('/users/:username', async (req, res) => {
     const username = req.params.username;
     const updates = req.body;
     try {
-        const updatedUser = await user.findOneAndUpdate({ username: username }, updates, { new: true });
+        const updatedUser = await User.findOneAndUpdate({ username: username }, updates, { new: true });
         if (!updatedUser) {
             return res.status(404).send({ message: "User not found" });
         }
@@ -92,7 +101,7 @@ router.put('/users/:username', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        const users = await user.find();
+        const users = await User.find();
         res.send(users);
     } catch (error) {
         res.status(500).send({ message: "Error retrieving users", error: error.message });
