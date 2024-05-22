@@ -51,22 +51,25 @@ router.post('/auth/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
+        // Finding user in the database
         const foundUser = await User.findOne({ username: username });
+
+        // User Not Found
         if (!foundUser) {
-            return res.status(404).send({ message: "User not found" });
+            return res.status(404).send({ success:false ,message: "User not found" });
         }
 
+        // Wrong Password
         if (foundUser.password !== password) {
-            return res.status(401).send({ message: "Invalid credentials" });
+            return res.status(401).send({ success:false , message: "Invalid credentials" });
         }
 
         // Generate a new token
         const newToken = jwt.sign({ userId: foundUser._id }, jwtSecret, { expiresIn: '1h' });
+        res.send({ success:true ,message: "Login successful",token:newToken,userDoc : foundUser});
 
-
-        res.send({ message: "Login successful",token:newToken});
     } catch (error) {
-        res.status(500).send({ message: "Error during login", error: error.message });
+        res.status(500).send({ success:false,message: "Error during login", error: error.message });
     }
 });
 
