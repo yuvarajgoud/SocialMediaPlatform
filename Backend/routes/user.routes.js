@@ -10,15 +10,6 @@ const User = require('../models/User.model');
 
 router.use(bodyParser.json());
 
-// router.get('/signup', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'register.html'));
-// });
-// router.get('/login', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'login.html'));
-
-// });
-
-
 
 router.post('/auth/signup', async (req, res) => {
     
@@ -65,7 +56,7 @@ router.post('/auth/login', async (req, res) => {
         }
 
         // Generate a new token
-        const newToken = jwt.sign({ userId: foundUser._id }, jwtSecret, { expiresIn: '1h' });
+        const newToken = jwt.sign({ userId: foundUser._id,username :foundUser.username }, jwtSecret, { expiresIn: '1h' });
         res.send({ success:true ,message: "Login successful",token:newToken,userDoc : foundUser});
 
     } catch (error) {
@@ -73,6 +64,19 @@ router.post('/auth/login', async (req, res) => {
     }
 });
 
+
+router.post('/auth/profile',(req,res)=>{
+    const {token} = req.body;
+    console.log(token)
+    jwt.verify(token,jwtSecret,{},(err,info)=>{
+      if(err) throw err;
+      res.json(info)
+    })
+  })
+
+router.get('/auth/logout',(req,res)=>{
+    res.json({token : ""})
+})
 
 router.get('/users/:username', async (req, res) => {
     const username = req.params.username;

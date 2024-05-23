@@ -1,0 +1,31 @@
+/* Navbar.css */
+
+.navbar {
+  margin-top: 30px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 400px;
+}
+
+.navbar-brand {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: large;
+}
+
+.navbar-buttons {
+  display: flex;
+  gap:15px;
+}
+
+.navbar-button {
+  border: none;
+  background-color: rgb(115, 115, 240);
+  padding: 7px;
+  border-radius: 10%;
+}
+
+.navbar-button:hover {
+  background-color: rgb(2, 146, 2);
+}
