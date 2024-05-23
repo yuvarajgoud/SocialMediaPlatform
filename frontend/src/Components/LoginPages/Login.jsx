@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { useState ,useContext} from 'react';
-import { UserContext } from '../Context/UserContext';
+import { useState ,useEffect} from 'react';
+
 
 const preventRefresh = (e) => {
 	e.preventDefault();
@@ -12,7 +12,31 @@ export default function Login() {
 	const [username,setUsername]  = useState('')
   const [password,setPassword] = useState('')
   const [errormsg,setErrorMsg] = useState(false)
-  const {userInfo,setUserInfo} = useContext(UserContext)
+	const [redirect,setRedirect] = useState(false)
+	
+  useEffect(()=>{
+     function checkLogin(){
+      const token = localStorage.getItem('jwttoken')
+      fetch('http://localhost:3000/api/auth/checkLogin',{
+        method: 'POST',
+        body : JSON.stringify({token}),
+        headers : {'Content-Type':'application/json'},
+      })
+      .then( res => res.json())
+      .then( res => {
+        if(res.userDoc){
+          setRedirect(true)
+        } else {
+          console.log("Verification Failed")
+        }
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    }
+    checkLogin()
+  },[])
+
 
   const login = async (ev)=>{
     ev.preventDefault();
@@ -26,7 +50,7 @@ export default function Login() {
 			console.log(res)
 			if(res.success){
 				setErrorMsg("Login Successful");
-				setUserInfo(res.userDoc)
+				setRedirect(true)
 				localStorage.setItem('jwttoken',res.token);
 			} else {
 				setErrorMsg("Invalid credentials");
@@ -35,11 +59,11 @@ export default function Login() {
 
   }
 
-	if(userInfo){
-		return (
-			<Navigate to={'/home'}/>
-		)
-	}
+	if(redirect){
+    return(
+      <Navigate to={'/home'}/>
+    )
+  }
 	
 	return (
 		<div className="wrapper signIn">
@@ -67,7 +91,7 @@ export default function Login() {
 					</button>
 				</form>
 				<p>
-					Don't have an account ? <Link to="/signup"> Sign In </Link>
+					Don't have an account ? <Link to="/signup"> Sign Up </Link>
 				</p>
 			</div>
 		</div>

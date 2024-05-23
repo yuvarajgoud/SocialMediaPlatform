@@ -64,15 +64,22 @@ router.post('/auth/login', async (req, res) => {
     }
 });
 
-
-router.post('/auth/profile',(req,res)=>{
+function verifyUser(req,res,next){
     const {token} = req.body;
     console.log(token)
     jwt.verify(token,jwtSecret,{},(err,info)=>{
-      if(err) throw err;
-      res.json(info)
+      if(err){
+        req.userDoc = false
+      }
+      req.userDoc = info;
     })
-  })
+    next()
+}
+
+
+router.post('/auth/checkLogin',verifyUser,(req,res)=>{
+    res.json({userDoc : req.userDoc})
+})
 
 router.get('/auth/logout',(req,res)=>{
     res.json({token : ""})
