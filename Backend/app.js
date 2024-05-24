@@ -5,6 +5,8 @@ require('dotenv').config()
 const port = 3000;
 const userRouter = require('./routes/user.routes');
 const postRouter = require('./routes/post.routes');
+const commentRouter = require('./routes/comment.routes.js');
+const likeRouter = require('./routes/like.routes.js');
 const app = express();
 const path = require('path');
 
@@ -29,8 +31,10 @@ app.get('/', (req, res) => {
 app.use('/api', userRouter);
 //FOR POSTS
 app.use('/api/posts', postRouter);
-
-
+//FOR COMMENTS
+app.use('/api/posts', commentRouter);
+//FOR LIKES
+app.use('/api/posts', likeRouter);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
