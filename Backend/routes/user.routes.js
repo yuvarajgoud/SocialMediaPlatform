@@ -66,7 +66,6 @@ router.post('/auth/login', async (req, res) => {
 
 function verifyUser(req,res,next){
     const {token} = req.body;
-    console.log(token)
     jwt.verify(token,jwtSecret,{},(err,info)=>{
       if(err){
         req.userDoc = false
