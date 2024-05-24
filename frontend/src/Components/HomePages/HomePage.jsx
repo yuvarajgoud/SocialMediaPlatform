@@ -2,15 +2,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import DisplayPost from './DisplayPost';
 
 const HomePage = () => {
     
   const {auth,setAuth} = useContext(AuthContext)
 
-  async function logout(){
-    localStorage.removeItem('token');
-    setAuth({ token: null, isAuthenticated: false });
-  }
+  
 
   if(!auth.isAuthenticated){
     return (
@@ -20,8 +19,8 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Welcome to the Home Page!</h1>
-            <button onClick={logout}>Logout</button>
+            <Navbar/>
+            <DisplayPost/>
         </div>
     );
 };

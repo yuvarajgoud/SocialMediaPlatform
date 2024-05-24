@@ -6,6 +6,14 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'  // This should match the model name used in mongoose.model() for the User model
     },
+    title :{
+        type : String,
+        required : true
+    },
+    username :{
+        type : String,
+        required : true
+    },
     content: {
         type: String,
         required: true
@@ -31,4 +39,3 @@ const postSchema = new mongoose.Schema({
 const Post = mongoose.model('Post', postSchema);
 
 module.exports = Post;
-

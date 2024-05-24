@@ -1,8 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const jwtSecret = 'secret_key';
+const post = require('../models/post.model');
 
-const post = require('../models/Post.model');
+function verifyUser(req, res, next) {
+    const { token } = req.body;
+    jwt.verify(token, jwtSecret, {}, (err, info) => {
+        if (err) {
+            req.userDoc = false
+        }
+        else {
+            req.userDoc = info;
+        }
+        next();
+    })
+}
 
 router.get('/', async (req, res) => {
     try {
@@ -10,7 +24,6 @@ router.get('/', async (req, res) => {
         if (posts.length === 0) {
             res.status(404).json({ message: 'No posts found' });
         } else {
-
             res.json(posts);
         }
     } catch (err) {
@@ -18,18 +31,25 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
-    const { title, content, author } = req.body;
+router.post('/', verifyUser, async (req, res) => {
+    const { title, content } = req.body;
+    const user = req.userDoc;
+    if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     const newPost = new post({
         title,
         content,
-        author,
-        date: new Date()
+        date: new Date(),
+        userId: user.userId,
+        username : user.username,
     });
 
     try {
+
         await newPost.save();
-        res.status(201).json(newPost);
+        res.status(201).json({newPost:newPost});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -48,21 +68,27 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-router.put('/:id', async (req, res) => {
-    const { title, content, author } = req.body;
+router.put('/:id', verifyUser, async (req, res) => {
+    const { title, content } = req.body;
     const postId = req.params.id;
-    const updatedPost = { title, content, author };
+    const updatedPost = { title, content };
+    if (!req.userDoc) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
     try {
         await post.findByIdAndUpdate(postId, updatedPost);
         const updatedPost1 = await post.findById(postId);
         res.status(200).json(updatedPost1);
     } catch (err) {
-        res.status(5000).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyUser, async (req, res) => {
     const postId = req.params.id;
+    if (!req.userDoc) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
     try {
         const deletedPost = await post.findByIdAndDelete(postId);
         if (!deletedPost) {
