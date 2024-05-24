@@ -1,37 +1,21 @@
-import React, { useEffect } from "react";
-import "./Styles/styles.css"
-import Login from "./Components/LoginPages/Login";
-import Signup from "./Components/LoginPages/Signup";
-import Layout from "./Components/LoginPages/Layout";
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './Context/AuthContext'
+import LoginPage from './Components/LoginPages/LoginPage';
+import HomePage from './Components/HomePages/HomePage';
+import SignupPage from './Components/LoginPages/SignupPage';
 
-import { Route, Routes } from "react-router-dom";
-import { UserContextProvider } from './Context/UserContext'
-import { useContext ,useState} from "react";
-import { UserContext } from "./Context/UserContext";
-import HomeLayout from "./Components/HomePages/HomeLayout";
-import { Navigate } from "react-router-dom";
+const App = () => (
+    <AuthProvider>
+        <Router>
+            <Routes>
+                <Route path="/" element={<LoginPage/>} />
+                <Route path="/signup" element={<SignupPage/>} />
+                <Route path="/home" element={<HomePage/>}/>
+            </Routes>
+        </Router>
+    </AuthProvider>
+);
 
-function App() {
-
-  const {userInfo , setUserInfo} = useContext(UserContext)
-
-  
-
-  return (
-    <>
-      <div className="App">
-        <UserContextProvider>
-          <Routes>
-            <Route path='/' element = {<Layout/>}>
-              <Route path={'/'} element = {<Login/>} />
-              <Route path={'/signup'} element = {<Signup />} />
-              <Route path = {'/home'} element={<HomeLayout/>}/>
-            </Route>
-          </Routes>
-        </UserContextProvider>
-      </div>
-    </>
-  )
-}
-
-export default App
+export default App;

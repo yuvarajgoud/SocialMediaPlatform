@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-export default function Signup() {
+export default function SignupPage() {
   const [username,setUsername] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
@@ -22,7 +22,6 @@ export default function Signup() {
       }
     })
   }
-
 
   return (
     <div className="wrapper signUp">

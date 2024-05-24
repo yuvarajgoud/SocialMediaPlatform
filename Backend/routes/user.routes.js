@@ -69,8 +69,9 @@ function verifyUser(req,res,next){
     jwt.verify(token,jwtSecret,{},(err,info)=>{
       if(err){
         req.userDoc = false
+      }else {
+        req.userDoc = info;
       }
-      req.userDoc = info;
     })
     next()
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { useState ,useEffect} from 'react';
-
+import { useState ,useContext} from 'react';
+import { AuthContext } from '../../Context/AuthContext';
+import '../../Styles/styles.css'
 
 const preventRefresh = (e) => {
 	e.preventDefault();
@@ -9,62 +10,35 @@ const preventRefresh = (e) => {
 
 export default function Login() {
 
-	const [username,setUsername]  = useState('')
-  const [password,setPassword] = useState('')
-  const [errormsg,setErrorMsg] = useState(false)
-	const [redirect,setRedirect] = useState(false)
-	
-  useEffect(()=>{
-     function checkLogin(){
-      const token = localStorage.getItem('jwttoken')
-      fetch('http://localhost:3000/api/auth/checkLogin',{
-        method: 'POST',
-        body : JSON.stringify({token}),
+	const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+		const [errormsg,setErrormsg] = useState('')
+    const { auth ,setAuth} = useContext(AuthContext);
+
+   async function login (ev){
+			ev.preventDefault();
+      const res = await fetch('http://localhost:3000/api/auth/login',{
+        method:'POST',
+        body : JSON.stringify({username,password}),
         headers : {'Content-Type':'application/json'},
       })
-      .then( res => res.json())
-      .then( res => {
-        if(res.userDoc){
-          setRedirect(true)
+      res.json().then( res =>{
+        console.log(res)
+        if(res.success){
+          setAuth({ token : res.token, isAuthenticated: true });
+					console.log(auth)
+          localStorage.setItem('token',res.token);
         } else {
-          console.log("Verification Failed")
+          setErrormsg("Invalid Credentials")
         }
       })
-      .catch( err => {
-        console.log(err)
-      })
     }
-    checkLogin()
-  },[])
 
-
-  const login = async (ev)=>{
-    ev.preventDefault();
-		console.log("Inside Login")
-    const res = await fetch('http://localhost:3000/api/auth/login',{
-      method:'POST',
-      body : JSON.stringify({username,password}),
-      headers : {'Content-Type':'application/json'},
-    })
-		res.json().then( res =>{
-			console.log(res)
-			if(res.success){
-				setErrorMsg("Login Successful");
-				setRedirect(true)
-				localStorage.setItem('jwttoken',res.token);
-			} else {
-				setErrorMsg("Invalid credentials");
-			}
-		})
-
-  }
-
-	if(redirect){
-    return(
-      <Navigate to={'/home'}/>
-    )
-  }
-	
+		if(auth.isAuthenticated){
+			return (
+				<Navigate to={'/home'}/>
+			)
+		}
 	return (
 		<div className="wrapper signIn">
 			<div className="illustration">
