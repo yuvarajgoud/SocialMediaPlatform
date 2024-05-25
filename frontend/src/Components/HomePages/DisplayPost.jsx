@@ -3,7 +3,7 @@ import './DisplayPost.css';
 import Post from "./Post";
 
 export default function DisplayPost() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([{}]);
 
   useEffect(() => {
     async function fetchData() {
@@ -27,7 +27,8 @@ export default function DisplayPost() {
           username={post.username} 
           title={post.title} 
           content={post.content}  
-          likes = {post.likes}/>
+          likes = {post.likes}
+          imageUrl = {post.imageUrl}/>
       ))}
     </div>
   );

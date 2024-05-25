@@ -1,6 +1,6 @@
 
 import { Navigate } from 'react-router-dom';
-import '../../Styles/styles.css'
+import './Create.css'
 
 import { useState } from 'react';
 
@@ -8,6 +8,7 @@ export default function Create(){
 
   const [title,setTitle] = useState('');
   const [content,setContent] = useState('');
+  const [imageUrl,setImageUrl] = useState('')
   const [redirect,setRedirect] = useState('')
   
   async function createNewPost(ev){
@@ -15,7 +16,7 @@ export default function Create(){
     const token = localStorage.getItem('token')
     const res = await fetch('http://localhost:3000/api/posts',{
         method:'POST',
-        body : JSON.stringify({title,content,token}),
+        body : JSON.stringify({title,content,token,imageUrl}),
         headers : {'Content-Type':'application/json'},
       })
       res.json().then( res =>{
@@ -35,28 +36,41 @@ export default function Create(){
   }
   return (
     <>
-      <div className="wrapper signIn">
-			<div className="form" >
-				<div className="heading">Create New Post</div>
-				<form onSubmit={createNewPost}>
-					<div>
-						<label htmlFor="title">Title</label>
-						<input type="text" id="name" placeholder="Enter title" 
-						       value={title} 
-                   onChange={ev => setTitle(ev.target.value)}/>
-					</div>
-					<div>
-						<label htmlFor="content">Content</label>
-						<textarea type="text-area" id="password" placeholder="Enter content" 
-						       value={content} 
-                   onChange={ev => setContent(ev.target.value)} />
-					</div>
-					<button type="submit">
-						Create Post
-					</button>
-				</form>
-			</div>
-		</div>
+      <div className="create-post-container">
+      <form className="create-post-form" onSubmit={createNewPost}>
+        <h2>Create New Post</h2>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="caption">Content</label>
+          <textarea
+            id="caption"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="imageUrl">Image URL</label>
+          <input
+            type="url"
+            id="imageUrl"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="create-post-button">Create New Post</button>
+      </form>
+    </div>
     </>
   )
 }

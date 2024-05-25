@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', verifyUser, async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content ,imageUrl} = req.body;
     const user = req.userDoc;
     if (!user) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -44,6 +44,7 @@ router.post('/', verifyUser, async (req, res) => {
         date: new Date(),
         userId: user.userId,
         username : user.username,
+        imageUrl
     });
 
     try {

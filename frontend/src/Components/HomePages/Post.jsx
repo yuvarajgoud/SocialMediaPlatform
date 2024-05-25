@@ -8,7 +8,7 @@ const Post = (post) => {
         <span className="username">{post.username}</span>
       </div>
       <div className="post-image-container">
-        <img src="https://cdn.dribbble.com/users/6278508/screenshots/14480758/media/46e7ccc545ad59d370d0179057259888.jpg" alt="Post" className="post-image" />
+        <img src={post.imageUrl} alt="Post" className="post-image" />
       </div>
       <div className="post-info">
         <div className="likes">
