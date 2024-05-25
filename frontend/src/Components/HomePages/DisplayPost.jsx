@@ -21,16 +21,15 @@ export default function DisplayPost() {
   }, []);
 
   return (
-    <div className="display-posts">
-      {posts.map((post) => (
-        <Post 
-          key={post._id} 
+    <div className="display-post-container">
+      {posts.map((post, index) => (
+        <Post key={post._id} 
           username={post.username} 
           title={post.title} 
-          content={post.content} 
-
-        />
+          content={post.content}  
+          likes = {post.likes}/>
       ))}
     </div>
   );
 }
+

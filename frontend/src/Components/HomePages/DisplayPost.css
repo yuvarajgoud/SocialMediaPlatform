@@ -1,67 +1,26 @@
-.display-posts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: center;
-}
+/* DisplayPost.css */
 
-.post-card {
-  background: #fff;
+.display-post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between posts */
+  padding: 20px;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 400px;
-  width: 100%;
-  transition: transform 0.3s, box-shadow 0.3s;
+  overflow-y: auto;
+  flex-grow: 1; /* Ensures it takes up available vertical space */
 }
 
-.post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.display-post-container::-webkit-scrollbar {
+  width: 8px;
 }
 
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+.display-post-container::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
 }
 
-.post-title {
-  font-size: 1.5em;
-  margin: 0;
-}
-
-.post-date {
-  font-size: 0.9em;
-  color: #888;
-}
-
-.post-content {
-  margin: 10px 0;
-  font-size: 1em;
-  line-height: 1.6;
-}
-
-.post-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-}
-
-.post-username {
-  font-weight: bold;
-  color: #555;
-}
-
-.post-interactions {
-  display: flex;
-  gap: 10px;
-}
-
-.post-likes, .post-comments {
-  font-size: 0.9em;
-  color: #888;
+.display-post-container::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
 }

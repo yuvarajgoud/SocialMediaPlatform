@@ -19,22 +19,30 @@ const Navbar = () => {
     )
   }
 
-
-
-
   return (
     <>
-      <nav>
-        <div className='logo'>
-          <Link to={'/home'}>Connectify</Link>
-        </div>
-        <div className='buttons'>
-            <button><Link to={'/create'}>Create</Link></button>
-            <button>Explore</button>
-            <button>Profile</button>
-            <button onClick={logout}>Logout</button>
-        </div>
-      </nav>
+      <div className="side-navbar">
+      <div className="brand-title">
+        Connectify
+      </div>
+      <ul className="nav-links">
+        <li className="nav-item">
+          <Link to={'/home'} className="nav-link">Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link to={'/create'} className="nav-link">Create</Link>
+        </li>
+        <li className="nav-item">
+          <Link to={'/home'} className="nav-link">Explore</Link>
+        </li>
+        <li className="nav-item">
+          <Link to={'/home'} className="nav-link">Profile</Link>
+        </li>
+        <li className="nav-item">
+          <Link  className="nav-link"><button onClick={logout} >Logout</button></Link>
+        </li>
+      </ul>
+    </div>
     </>
   );
 };
