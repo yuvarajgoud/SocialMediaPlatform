@@ -1,9 +1,13 @@
 /* MainLayout.css */
-
+body{
+  margin: 0;
+  padding: 0;
+}
 .main-container {
   display: flex;
-  gap: 200px;
+  justify-content: space-between;
   height: 100vh;
+  width: 100vw;
 }
 
 .side-navbar {
@@ -17,7 +21,7 @@
   flex-direction: column;
   overflow-y: auto;
   padding: 20px;
-  max-width: 50%;
+  max-width: 70%;
   background-color: #f9f9f9;
   
 }
@@ -40,6 +44,8 @@
   background-color: #f1f1f1;
   padding: 20px;
   overflow-y: auto;
+  width: 200px;
+  /* margin-right: 100px; */
 }
 
 .users-container::-webkit-scrollbar {

@@ -8,14 +8,6 @@ import Users from './Users';
 import './HomePage.css'
 
 const HomePage = () => {
-    
-  const {auth,setAuth} = useContext(AuthContext)
-  
-  if(!auth.isAuthenticated){
-    return (
-      <Navigate to={'/'}/>
-    )
-  }
 
     return (
       <div className="main-container">
@@ -23,7 +15,9 @@ const HomePage = () => {
         <div className="content-container">
           <DisplayPost />
         </div>
-        <Users />
+        <div className="users-container">
+          <Users /> 
+        </div>
       </div>
     );
 };

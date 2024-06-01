@@ -6,14 +6,18 @@ import LoginPage from './Components/LoginPages/LoginPage';
 import HomePage from './Components/HomePages/HomePage';
 import SignupPage from './Components/LoginPages/SignupPage';
 import Create from './Components/HomePages/Create'
+import ProtectedRoutes from './Components/HomePages/ProtectedRoutes';
 const App = () => (
     <AuthProvider>
         <Router>
             <Routes>
                 <Route path="/" element={<LoginPage/>} />
                 <Route path="/signup" element={<SignupPage/>} />
-                <Route path="/home" element={<HomePage/>}/>
-                <Route path="create" element={<Create/>} / >
+                <Route path="/protected" element={<ProtectedRoutes/>}>
+                    <Route index element={<div>Hello</div>} />
+                    <Route path="home" element={<HomePage/>}/>
+                    <Route path="create" element={<Create/>} / >
+                </Route>
             </Routes>
         </Router>
     </AuthProvider>

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function SignupPage() {
   const [username,setUsername] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [errormsg,setErrorMsg] = useState('');
+
+  const { auth ,setAuth} = useContext(AuthContext);
 
   const signup = async(ev)=>{
     ev.preventDefault(); 
@@ -21,6 +25,12 @@ export default function SignupPage() {
         setErrorMsg(res.message)
       }
     })
+  }
+
+  if(auth.isAuthenticated){
+    return (
+      <Navigate to={'/protected/home'}/>
+    )
   }
 
   return (

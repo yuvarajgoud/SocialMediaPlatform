@@ -6,7 +6,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
  
   margin-bottom: 20px;
-  max-width: 600px; /* Ensure post occupies a finite width */
+  max-width: 100%; /* Ensure post occupies a finite width */
   width: 100%;
 }
 

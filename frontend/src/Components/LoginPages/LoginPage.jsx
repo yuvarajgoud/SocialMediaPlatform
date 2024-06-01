@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useState ,useContext} from 'react';
 import { AuthContext } from '../../Context/AuthContext';
-import '../../Styles/styles.css'
+import './styles.css'
 
 const preventRefresh = (e) => {
 	e.preventDefault();
@@ -36,7 +36,7 @@ export default function Login() {
 
 		if(auth.isAuthenticated){
 			return (
-				<Navigate to={'/home'}/>
+				<Navigate to={'/protected/home'}/>
 			)
 		}
 	return (
