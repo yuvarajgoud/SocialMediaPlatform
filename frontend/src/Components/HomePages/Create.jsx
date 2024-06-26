@@ -8,16 +8,21 @@ export default function Create(){
 
   const [title,setTitle] = useState('');
   const [content,setContent] = useState('');
-  const [imageUrl,setImageUrl] = useState('')
+  const [image,setImage] = useState(null)
   const [redirect,setRedirect] = useState('')
-  
   async function createNewPost(ev){
     ev.preventDefault();
     const token = localStorage.getItem('token')
+    const formData = new FormData()
+    formData.append('title',title)
+    formData.append('content',content)
+    formData.append('image',image)
     const res = await fetch('http://localhost:3000/api/posts',{
         method:'POST',
-        body : JSON.stringify({title,content,token,imageUrl}),
-        headers : {'Content-Type':'application/json'},
+        body : formData,
+        headers: {
+          'authorization': `Bearer ${token}`
+        },
       })
       res.json().then( res =>{
         console.log(res)
@@ -31,7 +36,7 @@ export default function Create(){
   }
   if(redirect){
     return(
-      <Navigate to={'/home'} />
+      <Navigate to={'/protected/home'} />
     )
   }
   return (
@@ -61,10 +66,10 @@ export default function Create(){
         <div className="form-group">
           <label htmlFor="imageUrl">Image URL</label>
           <input
-            type="url"
+            type="file"
             id="imageUrl"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            name='image'
+            onChange={(e) => setImage(e.target.files[0])}
             required
           />
         </div>

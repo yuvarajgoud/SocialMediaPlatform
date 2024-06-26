@@ -4,10 +4,11 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const jwtSecret = 'secret_key';
 const post = require('../models/post.model');
+const multer = require('multer')
 
 function verifyUser(req, res, next) {
-    const { token } = req.body;
-    jwt.verify(token, jwtSecret, {}, (err, info) => {
+    const [bearer, token] =req.headers['authorization'].split(' ');
+    jwt.verify(token, jwtSecret, (err, info) => {
         if (err) {
             req.userDoc = false
         }
@@ -21,30 +22,39 @@ function verifyUser(req, res, next) {
 router.get('/', async (req, res) => {
     try {
         const posts = await post.find();
-        if (posts.length === 0) {
-            res.status(404).json({ message: 'No posts found' });
-        } else {
+        // if (!posts.length) {
+        //     res.status(404).json({ message: 'No posts found' });
+        // } else {
             res.json(posts);
-        }
+        // }
     } catch (err) {
         res.status(500).json({ message: err });
     }
 })
 
-router.post('/', verifyUser, async (req, res) => {
-    const { title, content ,imageUrl} = req.body;
+const storage = multer.diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname)); // Append timestamp to the file name
+    },
+  });
+    // Initialize upload variable
+const upload = multer({ storage: storage });
+
+router.post('/', verifyUser,upload.single('image'), async (req, res) => {
+    const { title, content} = req.body;
+    console.log(req.file.path)
     const user = req.userDoc;
     if (!user) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
-
     const newPost = new post({
         title,
         content,
         date: new Date(),
         userId: user.userId,
         username : user.username,
-        imageUrl
+        imageUrl :  req.file.filename
     });
 
     try {

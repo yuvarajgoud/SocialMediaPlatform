@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to={'/protected/home'} className="nav-link">Home</Link>
         </li>
         <li className="nav-item">
-          <Link to={'/create'} className="nav-link">Create</Link>
+          <Link to={'/protected/create'} className="nav-link">Create</Link>
         </li>
         <li className="nav-item">
           <Link to={'/protected/home'} className="nav-link">Explore</Link>

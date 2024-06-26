@@ -8,7 +8,7 @@ const Post = (post) => {
         <span className="username">{post.username}</span>
       </div>
       <div className="post-image-container">
-        <img src={post.imageUrl} alt="Post" className="post-image" />
+        <img src={`http://localhost:3000/uploads/${post.imageUrl}`} alt="Post" className="post-image" />
       </div>
       <div className="post-info">
         <div className="likes">

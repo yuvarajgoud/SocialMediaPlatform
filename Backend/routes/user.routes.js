@@ -56,7 +56,7 @@ router.post('/auth/login', async (req, res) => {
         }
 
         // Generate a new token
-        const newToken = jwt.sign({ userId: foundUser._id,username :foundUser.username }, jwtSecret, { expiresIn: '1h' });
+        const newToken = jwt.sign({ userId: foundUser._id,username :foundUser.username }, jwtSecret);
         res.send({ success:true ,message: "Login successful",token:newToken,userDoc : foundUser});
 
     } catch (error) {
