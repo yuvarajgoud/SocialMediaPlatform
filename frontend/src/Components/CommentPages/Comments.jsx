@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
@@ -46,4 +46,3 @@ const Comments = ({ postId }) => {
 };
 
 export default Comments;
-
