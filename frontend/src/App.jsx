@@ -7,6 +7,7 @@ import HomePage from './Components/HomePages/HomePage';
 import SignupPage from './Components/LoginPages/SignupPage';
 import Create from './Components/HomePages/Create'
 import ProtectedRoutes from './Components/HomePages/ProtectedRoutes';
+import Profile from './Components/HomePages/Profile';
 const App = () => (
     <AuthProvider>
         <Router>
@@ -16,7 +17,8 @@ const App = () => (
                 <Route path="/protected" element={<ProtectedRoutes/>}>
                     <Route index element={<div>Hello</div>} />
                     <Route path="home" element={<HomePage/>}/>
-                    <Route path="create" element={<Create/>} / >
+                    <Route path="create" element={<Create/>} />
+                    <Route path="profile" element={<Profile/>}/>
                 </Route>
             </Routes>
         </Router>

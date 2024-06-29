@@ -27,7 +27,7 @@
 
 .username {
   font-weight: bold;
-  color: #333;
+  color: black !important;
 }
 
 .post-image-container {

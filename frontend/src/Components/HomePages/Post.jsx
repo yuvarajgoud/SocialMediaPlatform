@@ -2,9 +2,9 @@ import React from 'react';
 import './Post.css';
 const Post = (post) => {
     return (
-        <div className="post-container">
+    <div className="post-container">
       <div className="post-header">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR8iItIBWxiC4qdupjgBi6doBOe8pudzJ2tNZ8DcsvDQ&s" alt="Profile" className="profile-picture" />
+        <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg" alt="Profile" className="profile-picture" />
         <span className="username">{post.username}</span>
       </div>
       <div className="post-image-container">

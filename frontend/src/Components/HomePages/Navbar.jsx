@@ -30,7 +30,7 @@ const Navbar = () => {
           <Link to={'/protected/home'} className="nav-link">Explore</Link>
         </li>
         <li className="nav-item">
-          <Link to={'/protected/home'} className="nav-link">Profile</Link>
+          <Link to={'/protected/profile'} className="nav-link">Profile</Link>
         </li>
         <li className="nav-item">
           <Link  className="nav-link"><button onClick={logout} >Logout</button></Link>

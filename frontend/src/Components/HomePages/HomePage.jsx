@@ -15,9 +15,6 @@ const HomePage = () => {
         <div className="content-container">
           <DisplayPost />
         </div>
-        <div className="users-container">
-          <Users /> 
-        </div>
       </div>
     );
 };
