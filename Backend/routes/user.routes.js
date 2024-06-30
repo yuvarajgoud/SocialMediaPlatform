@@ -102,7 +102,6 @@ router.get('/users/:username', async (req, res) => {
 router.put('/users/:username', async (req, res) => {
     const username = req.params.username;
     const updates = req.body;
-    console.log("Inside Put request")
     try {
         const updatedUser = await User.findOneAndUpdate({ username: username }, updates, { new: true });
         if (!updatedUser) {

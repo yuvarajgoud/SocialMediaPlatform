@@ -4,28 +4,32 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import './Profile.css'; // Import the CSS file
 import Navbar from './Navbar';
+import DisplayProfilePosts from './DisplayProfilePosts';
 
 const Profile = () => {
   const [profile,setProfile] = useState({})
   const [editProfile,setEditProfile] = useState(false);
   let username = ""
   const [uname,setUname] = useState("");
+  const [userId,setUserId] = useState("")
+  const [posts,setPosts] = useState([])
   useEffect(()=>{
     async function getUsername(){
       const res = await axios.post("http://localhost:3000/api/auth/checkLogin",{
         token:localStorage.getItem('token')
       });
       const user = res.data.userDoc;
-      console.log(user.username) // Working here and printing username here
       username = user.username
       setUname(username)
-      console.log(username) // But not working here and printing empty string
+      setUserId(user.userId);
       const url = `http://localhost:3000/api/users/${username}`;
-      console.log(url)
       const response = await axios.get(url)
       setProfile(response.data)
-      // console.log(response.data)
-      // console.log(profile)
+
+      //posts
+      const res1 = await axios(`http://localhost:3000/api/posts/${user.userId}`)
+      setPosts(res1.data)
+      console.log(res1.data)
     }
     getUsername();
   },[editProfile])
@@ -33,16 +37,40 @@ const Profile = () => {
   async function saveEdits(e){
     e.preventDefault()
     const url = `http://localhost:3000/api/users/${uname}`;
-    console.log(url)
     const res = await axios.put(url,profile)
-    console.log(res);
     setProfile(res.data);
     setEditProfile(false);
+  }
+
+  async function deletePost(post){
+    const res = await axios.delete(`http://localhost:3000/api/posts/${post.postId}`)
+    if(res.status === 200){
+      const updatedPosts = posts.filter(post => post._id!=res.data._id);
+      setPosts(updatedPosts)
+      alert("Post Deleted Succesfully");
+    } else {
+      alert("Post Cannot be deleted")
+    }
+  }
+  async function editPost(post,newPost){
+    const res = await axios.put(`http://localhost:3000/api/posts/${post.postId}`,{
+      title : newPost.title,
+      content : newPost.content
+    })
+    if(res.status === 200){
+      let updatedPosts = posts.filter(post => post._id!=res.data._id);
+      updatedPosts = [...updatedPosts,newPost]
+      setPosts(updatedPosts)
+      alert("Post Edited Succesfully");
+    } else {
+      alert("Post Cannot be Edited")
+    }
   }
 
   return (
     <div className="main-container">
         <Navbar />
+        <div className='content-container'>
         {editProfile ?
         (<div className="create-post-container">
           <form className="create-post-form" >
@@ -70,7 +98,7 @@ const Profile = () => {
           </form>
         </div>)
         :
-        (<div className="content-container">
+        (<><div>
             <div className="profile-container">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="Profile Picture" className="profile-pic" />
               <h2 className="username">{profile.username}</h2>
@@ -78,7 +106,13 @@ const Profile = () => {
               <p className="bio">{profile.about}</p>
               <button className="edit-button" onClick={()=>setEditProfile(true)}>Edit Profile</button>
             </div>
-        </div>)}
+        </div>
+        <DisplayProfilePosts posts ={posts}
+                             deletePost = {deletePost}
+                             editPost = {editPost}/>
+        </>
+        )}
+        </div>
       </div>
   );
 };

@@ -4,13 +4,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #f3ec78, #af4261);
+  /* background: linear-gradient(135deg, #f3ec78, #af4261); */
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 300px;
   margin: auto;
   transition: transform 0.2s ease-in-out;
+  margin-bottom: 50px;
 }
 
 .profile-container:hover {
@@ -27,20 +28,20 @@
 
 .username {
   margin: 10px 0 0;
-  color: #fff;
+  color: black;
   font-family: 'Arial', sans-serif;
 }
 
 .email {
   margin: 5px 0;
-  color: #fff;
+  color: black;
   font-size: 0.9em;
   opacity: 0.8;
 }
 
 .bio {
   margin: 10px 0 20px;
-  color: #fff;
+  color: black;
   font-size: 0.8em;
   text-align: center;
   line-height: 1.4;
