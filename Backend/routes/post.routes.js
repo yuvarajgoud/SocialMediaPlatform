@@ -4,6 +4,8 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const jwtSecret = 'secret_key';
 const post = require('../models/post.model');
+const comment = require('../models/comment.model');
+const mongoose = require('mongoose');
 const multer = require('multer');
 const { findById, findByIdAndUpdate } = require('../models/User.model');
 
@@ -23,11 +25,7 @@ function verifyUser(req, res, next) {
 router.get('/', async (req, res) => {
     try {
         const posts = await post.find();
-        // if (!posts.length) {
-        //     res.status(404).json({ message: 'No posts found' });
-        // } else {
-            res.json(posts);
-        // }
+        res.json(posts);
     } catch (err) {
         res.status(500).json({ message: err });
     }
@@ -121,6 +119,8 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Like Endpoints
+
 router.post('/:postId/like',async (req,res)=>{
     try {
         const _id = req.params.postId;
@@ -179,4 +179,142 @@ router.post('/:postId/unlike',async (req,res)=>{
       }
 })
 
+// Comment End Points
+
+// Route to add a comment to a specific post
+router.post('/:postId/comments', async (req, res) => {
+    const { postId } = req.params;
+    const { userId, content ,username} = req.body;
+  
+    try {
+      const postDetails = await post.findById(postId);
+  
+      if (!postDetails) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      // Add the new comment to the comments array
+      const newComment = new comment({
+        userId,
+        content,
+        username,
+      })
+      newComment.save();
+      console.log(newComment);
+      postDetails.comments.push(newComment);
+  
+      // Save the post with the new comment
+      const updatedPost = await postDetails.save();
+  
+      res.status(201).json(updatedPost.comments);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+
+  // Route to get all comments of a specific post
+router.get('/:postId/comments', async (req, res) => {
+    const postId = req.params.postId;
+  
+    try {
+      const postDetails = await post.findById(postId).select('comments'); // Fetch only the comments
+  
+      if (!postDetails) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      res.json(postDetails.comments); // Return the comments array
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+  // Route to delete a comment from a specific post
+  router.delete('/:postId/comments/:commentId', async (req, res) => {
+    const { postId, commentId } = req.params;
+  
+    try {
+      // Fetch the post document
+      const postDetails = await post.findById(postId);
+  
+      if (!postDetails) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      // Find the index of the comment to remove
+      const commentIndex = postDetails.comments.findIndex(comment => comment._id.toString() === commentId);
+  
+      if (commentIndex === -1) {
+        return res.status(404).json({ message: 'Comment not found' });
+      }
+  
+      // Remove the comment from the array
+      postDetails.comments.splice(commentIndex, 1);
+  
+      // Save the updated post document
+      await postDetails.save();
+  
+      res.status(200).json(postDetails.comments);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
 module.exports = router;
+
+
+
+[
+    {
+        "_id": "667e44d2b00724ce77625754",
+        "userId": "66503938995545197766ce88",
+        "title": "Image",
+        "username": "Tharun",
+        "content": "This is my first post",
+        "imageUrl": "1719551186146.jpg",
+        "likes": 1,
+        "comments": [],
+        "createdAt": "2024-06-28T05:06:26.342Z",
+        "__v": 0
+    },
+    {
+        "_id": "667e536eb00724ce776257a2",
+        "userId": "6659e2270ef1ddb3a41bd1fc",
+        "title": "Hii Everyone",
+        "username": "VamshiKrishna",
+        "content": "New to the community",
+        "imageUrl": "1719554926170.jpg",
+        "likes": 3,
+        "comments": [],
+        "createdAt": "2024-06-28T06:08:46.328Z",
+        "__v": 0
+    },
+    {
+        "_id": "668118bd4a91737e582040de",
+        "userId": "6650106d58543dfecd48fc43",
+        "title": "Hii... Everyone",
+        "username": "Yuvaraj Goud",
+        "content": "This is my first Post",
+        "imageUrl": "1719736509757.jpg",
+        "likes": 0,
+        "comments": [],
+        "createdAt": "2024-06-30T08:35:09.783Z",
+        "__v": 0
+    },
+    {
+        "_id": "6681f49a5d5af790cd9b8589",
+        "userId": "6651f1ad8dedc50d3c39f1b8",
+        "title": "New User",
+        "username": "Jithendar",
+        "content": "Hello This is My first post",
+        "imageUrl": "1719792794408.jpg",
+        "likes": 0,
+        "comments": [],
+        "createdAt": "2024-07-01T00:13:14.505Z",
+        "__v": 0
+    }
+]
