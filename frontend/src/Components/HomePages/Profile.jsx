@@ -27,7 +27,7 @@ const Profile = () => {
       setProfile(response.data)
 
       //posts
-      const res1 = await axios(`http://localhost:3000/api/posts/${user.userId}`)
+      const res1 = await axios.get(`http://localhost:3000/api/posts/${user.userId}`)
       setPosts(res1.data)
       console.log(res1.data)
     }

@@ -1,56 +1,26 @@
 /* Post.css */
-
 .post-container {
-  background-color: #ffffff;
-  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 8px;
+  background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- 
-  margin-bottom: 20px;
-  max-width: 100%; /* Ensure post occupies a finite width */
-  width: 100%;
+  position: relative; /* Ensure the container can position its children absolutely */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative; /* Ensure relative positioning for the dropdown */
 }
 
 .post-header {
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #eaeaea;
-}
-.header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-}
-
-.options{
-  position: relative;
-}
-.options button{
-  font-weight: bold;
-  padding-right: 20px;
-  font-size: 2rem;
-}
-
-.dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.dropdown-item {
-  padding: 8px 16px;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background-color: #f0f0f0;
 }
 
 .profile-picture {
@@ -62,34 +32,73 @@
 
 .username {
   font-weight: bold;
-  color: black !important;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.username:hover {
+  text-decoration: underline;
+}
+
+.options {
+  position: relative; /* Ensure the dropdown menu is positioned relative to this */
+}
+
+.options button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  right: 0; /* Align to the right side of the options container */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  width: 100px;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
 }
 
 .post-image-container {
-  width: 100%;
-  max-height: 500px; /* Adjust as necessary */
-  overflow: hidden;
+  text-align: center;
+  margin: 10px 0;
 }
 
 .post-image {
-  width: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  border-radius: 8px;
 }
 
 .post-info {
-  padding: 10px;
+  margin-top: 10px;
 }
 
 .likes {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .like-icon {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #e74c3c;
+  font-size: 33px;
+  color: #ff6b6b;
+  background: none;
+  border: none;
+  cursor: pointer;
   margin-right: 5px;
 }
 
@@ -99,15 +108,81 @@
 }
 
 .post-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
+  margin: 10px 0 5px;
 }
 
 .post-caption {
-  font-size: 14px;
-  color: #666;
-  word-wrap: break-word;
- /* Wrap longer captions */
+  color: #555;
+}
+
+.view-comments {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.view-comments:hover {
+  text-decoration: underline;
+}
+
+.create-post-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-post-form h2 {
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.create-post-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-post-button:hover {
+  background-color: #0056b3;
 }

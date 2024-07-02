@@ -2,13 +2,24 @@ import React from 'react';
 import { useState } from 'react';
 import './Post.css';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Comment from './Comment';
+
+
+
 const Post = (post) => {
+
+  const navigate = useNavigate();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [liked,setLiked] = useState(false)
   const [likesCount,setLikesCount] = useState(post.likes)
   const [edit,setEdit] = useState(false)
   const [editPost,setEditPost] = useState(post)
+  const [handleUsername,setHandleUsername] = useState(false);
+  const [commentVisible,setCommentsVisible] = useState(false);
+  
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
@@ -35,13 +46,17 @@ const Post = (post) => {
     setEdit(false);
     setDropdownOpen(false);
   }
+
+  function onClickUsername(){
+    navigate(`/protected/userProfile/${post.username}`);
+  }
     return (
     <>
     <div className="post-container">
       <div className='header'>
         <div className='post-header'>
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="Profile" className="profile-picture" />
-          <span className="username">{post.username}</span>
+          <button className="username" onClick={onClickUsername}>{post.username}</button>
         </div>
         {post.flag ? 
         (<div className='options'>
@@ -66,6 +81,15 @@ const Post = (post) => {
         <div className="post-title">{post.title}</div>
         <div className="post-caption">{post.content}</div>
       </div>
+      {!commentVisible ? (
+        <button className="view-comments" onClick={()=>setCommentsVisible(true)}>View All comments</button>
+      ):(
+        <>
+        <button className="view-comments" onClick={()=>setCommentsVisible(false)}>Close All comments</button>
+        <Comment postId = {post.postId}/>
+
+        </>
+      )}
     </div>
     {edit &&
       (<div className="create-post-container">

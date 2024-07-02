@@ -8,6 +8,8 @@ import SignupPage from './Components/LoginPages/SignupPage';
 import Create from './Components/HomePages/Create'
 import ProtectedRoutes from './Components/HomePages/ProtectedRoutes';
 import Profile from './Components/HomePages/Profile';
+import UserProfile from './Components/HomePages/UserProfile';
+import Comp from './Components/HomePages/Comp';
 const App = () => (
     <AuthProvider>
         <Router>
@@ -19,6 +21,7 @@ const App = () => (
                     <Route path="home" element={<HomePage/>}/>
                     <Route path="create" element={<Create/>} />
                     <Route path="profile" element={<Profile/>}/>
+                    <Route path="userProfile/:username" element={<UserProfile/>}/>
                 </Route>
             </Routes>
         </Router>

@@ -1,67 +1,130 @@
-/* src/ProfileComponent.css */
+/* Profile.css */
 
+/* Main container for the entire profile page */
+.main-container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent scrolling on the main container */
+}
+
+/* Navbar styling to position it as a sidebar */
+.navbar {
+  width: 250px; /* Fixed width for the sidebar */
+  background-color: #333; /* Background color for the sidebar */
+  padding: 20px;
+  color: white;
+  height: 100vh; /* Full height to match the main container */
+  overflow-y: auto; /* Enable scrolling within the sidebar if content overflows */
+}
+
+/* Content container to take the rest of the space */
+.content-container {
+  flex: 1; /* Take remaining space after the sidebar */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 20px;
+  background-color: #f4f4f4; /* Slight background color for better visibility */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Profile container styling */
 .profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background: linear-gradient(135deg, #f3ec78, #af4261); */
+  background-color: white;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  margin: auto;
-  transition: transform 0.2s ease-in-out;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 600px; /* Optional: Limit the maximum width */
 }
 
-.profile-container:hover {
-  transform: translateY(-10px);
-}
-
+/* Profile picture styling */
 .profile-pic {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 
+/* Styling for the username */
 .username {
-  margin: 10px 0 0;
-  color: black;
-  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.email {
-  margin: 5px 0;
-  color: black;
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
-.bio {
-  margin: 10px 0 20px;
-  color: black;
-  font-size: 0.8em;
+/* Email and bio styling */
+.email, .bio {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
   text-align: center;
-  line-height: 1.4;
 }
 
+/* Button styling */
 .edit-button {
-  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 20px;
-  background-color: #6a0572;
-  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .edit-button:hover {
-  background-color: #af4261;
-  transform: scale(1.05);
+  background-color: #0056b3;
 }
 
-.edit-button:active {
-  transform: scale(0.95);
+/* Styling for the create post container and form */
+.create-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.create-post-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Scrollbar styling for better UI */
+.content-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.content-container::-webkit-scrollbar-track {
+  background: #f4f4f4;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.content-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Ensure the DisplayProfilePosts component fits within the content container */
+.display-post-container {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-post-container > * {
+  margin-bottom: 20px; /* Space between posts */
 }

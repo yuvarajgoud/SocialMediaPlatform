@@ -89,6 +89,15 @@ router.get('/:userId',async (req,res)=>{
     
 })
 
+router.get('/username/:username',async (req,res)=>{
+  const username = req.params.username;
+  const posts = await post.find({username : username})
+  // if(posts.length == 0){
+  //     res.json({msg : "No posts to show"});
+  // } else {
+      res.json(posts);
+})
+
 router.put('/:id', async (req, res) => {
     const { title, content } = req.body;
     const postId = req.params.id;
@@ -198,6 +207,7 @@ router.post('/:postId/comments', async (req, res) => {
         userId,
         content,
         username,
+        postId
       })
       newComment.save();
       console.log(newComment);
@@ -205,8 +215,10 @@ router.post('/:postId/comments', async (req, res) => {
   
       // Save the post with the new comment
       const updatedPost = await postDetails.save();
-  
-      res.status(201).json(updatedPost.comments);
+
+      const comments = await comment.find({postId : postId});
+      res.status(201).json(comments);
+
     } catch (error) {
       console.error('Error adding comment:', error);
       res.status(500).json({ message: 'Internal Server Error' });
@@ -219,13 +231,13 @@ router.get('/:postId/comments', async (req, res) => {
     const postId = req.params.postId;
   
     try {
-      const postDetails = await post.findById(postId).select('comments'); // Fetch only the comments
+      const comments = await comment.find({postId : postId}); // Fetch only the comments
   
-      if (!postDetails) {
-        return res.status(404).json({ message: 'Post not found' });
+      if (!comments) {
+        return res.status(404).json({ message: 'No comments on this post' });
       }
   
-      res.json(postDetails.comments); // Return the comments array
+      res.json(comments); // Return the comments array
     } catch (error) {
       console.error('Error fetching comments:', error);
       res.status(500).json({ message: 'Internal Server Error' });
@@ -256,8 +268,13 @@ router.get('/:postId/comments', async (req, res) => {
   
       // Save the updated post document
       await postDetails.save();
-  
-      res.status(200).json(postDetails.comments);
+
+      //delete comment
+      const deletedComment = await comment.findOneAndDelete({_id : commentId});
+
+      const comments = await comment.find({postId : postId});
+      res.status(201).json(comments);
+
     } catch (error) {
       console.error('Error deleting comment:', error);
       res.status(500).json({ message: 'Internal Server Error' });
@@ -265,9 +282,6 @@ router.get('/:postId/comments', async (req, res) => {
   });
 
 module.exports = router;
-
-
-
 [
     {
         "_id": "667e44d2b00724ce77625754",
