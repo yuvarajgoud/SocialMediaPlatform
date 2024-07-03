@@ -128,3 +128,9 @@
 .display-post-container > * {
   margin-bottom: 20px; /* Space between posts */
 }
+.profile-pic-change{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}

@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useRef} from 'react';
 import axios from "axios";
 import './Profile.css'; // Import the CSS file
 import Navbar from './Navbar';
@@ -13,6 +13,8 @@ const Profile = () => {
   const [uname,setUname] = useState("");
   const [userId,setUserId] = useState("")
   const [posts,setPosts] = useState([])
+  const [image,setImage] = useState({})
+  const inputRef = useRef(null);
   useEffect(()=>{
     async function getUsername(){
       const res = await axios.post("http://localhost:3000/api/auth/checkLogin",{
@@ -67,6 +69,19 @@ const Profile = () => {
     }
   }
 
+  async function handleChange(){
+    const formData = new FormData();
+    formData.append("image",image);
+    console.log(image)
+    const res = await fetch(`http://localhost:3000/api/users/image/${profile.username}`,{
+      method:'POST',
+      body : formData,
+    })
+    const updatedUser = await res.json()
+    setProfile(updatedUser)
+    setImage({});
+  }
+
   return (
     <div className="main-container">
         <Navbar />
@@ -80,6 +95,7 @@ const Profile = () => {
               <input
                 type="text"
                 id="title"
+                ref={inputRef} 
                 value={profile.about}
                 onChange={(e) => setProfile({...profile,about:e.target.value})}
                 required
@@ -100,7 +116,20 @@ const Profile = () => {
         :
         (<><div>
             <div className="profile-container">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="Profile Picture" className="profile-pic" />
+              <img src={`http://localhost:3000/uploads/${profile.image}`} alt="Profile Picture" className="profile-pic" />
+              <div className="form-group">
+                <label htmlFor="imageUrl">Profile Picture</label>
+                <div className='profile-pic-change'>
+                  <input
+                    type="file"
+                    id="imageUrl"
+                    name='image'
+                    onChange={(e) => setImage(e.target.files[0])}
+                    required
+                  />
+                  <button onClick={handleChange} className="edit-button">Change</button> 
+                </div>
+              </div>
               <h2 className="username">{profile.username}</h2>
               <p className="email">{profile.email}</p>
               <p className="bio">{profile.about}</p>

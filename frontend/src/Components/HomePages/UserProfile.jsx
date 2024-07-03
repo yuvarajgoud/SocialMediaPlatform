@@ -25,15 +25,13 @@ function UserProfile() {
     }
     fetchData();
   },[])
-  console.log(profile)
-  console.log(posts);
   return (
     <div className="main-container">
         <Navbar />
         <div className='content-container'>
         <div>
             <div className="profile-container">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="Profile Picture" className="profile-pic" />
+              <img src={`http://localhost:3000/uploads/${profile.image}`} alt="Profile Picture" className="profile-pic" />
               <h2 className="username">{profile.username}</h2>
               <p className="email">{profile.email}</p>
               <p className="bio">{profile.about}</p>

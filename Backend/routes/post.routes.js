@@ -274,7 +274,7 @@ router.get('/:postId/comments', async (req, res) => {
 
       const comments = await comment.find({postId : postId});
       res.status(201).json(comments);
-
+      
     } catch (error) {
       console.error('Error deleting comment:', error);
       res.status(500).json({ message: 'Internal Server Error' });

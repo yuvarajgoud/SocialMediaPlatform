@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         default:"New user"
     },
+    image : {
+        type : String,
+        default : "download.png"
+    }
 })
 const User = mongoose.model('user', userSchema);
 

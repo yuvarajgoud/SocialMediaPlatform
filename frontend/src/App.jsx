@@ -9,11 +9,12 @@ import Create from './Components/HomePages/Create'
 import ProtectedRoutes from './Components/HomePages/ProtectedRoutes';
 import Profile from './Components/HomePages/Profile';
 import UserProfile from './Components/HomePages/UserProfile';
-import Comp from './Components/HomePages/Comp';
+import LandingPage from './Components/HomePages/LandingPage';
 const App = () => (
     <AuthProvider>
         <Router>
             <Routes>
+                <Route path="/landingpage" element={<LandingPage/>} />
                 <Route path="/" element={<LoginPage/>} />
                 <Route path="/signup" element={<SignupPage/>} />
                 <Route path="/protected" element={<ProtectedRoutes/>}>

@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-
+const multer = require('multer');
 const jwtSecret = 'secret_key';
 
 const User = require('../models/User.model');
@@ -112,6 +112,30 @@ router.put('/users/:username', async (req, res) => {
         res.status(500).send({ message: "Error updating user profile", error: error.message });
     }
 });
+
+const storage = multer.diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + file.originalname); // Append timestamp to the file name
+    },
+  });
+    // Initialize upload variable
+const upload = multer({ storage: storage });
+
+router.post('/users/image/:username',upload.single('image'),async (req,res)=>{
+    const username = req.params.username;
+    console.log(req.file)
+    const fileName = req.file.filename;
+    try {
+        const updatedUser = await User.findOneAndUpdate({ username: username }, {image:fileName}, { new: true });
+        if (!updatedUser) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        res.send(updatedUser);
+    } catch (error) {
+        res.status(500).send({ message: "Error updating user profile", error: error.message });
+    }
+})
 
 router.get('/users', async (req, res) => {
     try {
