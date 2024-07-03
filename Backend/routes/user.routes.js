@@ -124,7 +124,6 @@ const upload = multer({ storage: storage });
 
 router.post('/users/image/:username',upload.single('image'),async (req,res)=>{
     const username = req.params.username;
-    console.log(req.file)
     const fileName = req.file.filename;
     try {
         const updatedUser = await User.findOneAndUpdate({ username: username }, {image:fileName}, { new: true });

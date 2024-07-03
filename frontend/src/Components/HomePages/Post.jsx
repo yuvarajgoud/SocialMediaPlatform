@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './Post.css';
 import axios from 'axios';
@@ -19,8 +19,17 @@ const Post = (post) => {
   const [editPost,setEditPost] = useState(post)
   const [handleUsername,setHandleUsername] = useState(false);
   const [commentVisible,setCommentsVisible] = useState(false);
-  
+  const [avatar,setAvatar] = useState("");
 
+  useEffect(()=>{
+    async function fetchUser(){
+      const res = await axios.get(`http://localhost:3000/api/users/${post.username}`)
+      const user = res.data;
+      setAvatar(user.image)
+    }
+    fetchUser();
+  },[])
+  
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -55,7 +64,7 @@ const Post = (post) => {
     <div className="post-container">
       <div className='header'>
         <div className='post-header'>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" alt="Profile" className="profile-picture" />
+          <img src={`http://localhost:3000/uploads/${avatar}`} alt="Profile" className="profile-picture" />
           <button className="username" onClick={onClickUsername}>{post.username}</button>
         </div>
         {post.flag ? 

@@ -1,51 +1,50 @@
+/* Navbar.css */
 .side-navbar {
+  width: 200px;
   height: 100vh;
-  width: 250px;
-  background-color: #242526;
-  color: #f1f1f1;
+  background-color: #282c34;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  justify-content:start;
 }
 
 .brand-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #f1f1f1;
+  font-size: 1.5rem;
+  color: #61dafb;
+  margin-bottom: 20px;
 }
 
 .nav-links {
   list-style: none;
   padding: 0;
-  width: 100%;
 }
 
 .nav-item {
-  width: 100%;
+  margin-bottom: 20px;
 }
 
 .nav-link {
-  display: block;
-  width: 100%;
-  padding: 15px 20px;
-  color: #f1f1f1;
+  color: #fff;
   text-decoration: none;
-  transition: background-color 0.3s;
+  font-size: 1.1rem;
+  transition: color 0.3s;
 }
 
 .nav-link:hover {
-  background-color: #3a3b3c;
+  color: #61dafb;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: #fff;
   cursor: pointer;
+  font-size: 1.1rem;
+  transition: color 0.3s;
 }
 
-.nav-link:active {
-  background-color: #555;
-}
-
-.nav-link:focus {
-  outline: none;
-  background-color: #3a3b3c;
+.logout-button:hover {
+  color: #ff4757;
 }

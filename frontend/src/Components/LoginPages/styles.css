@@ -23,7 +23,6 @@
 
 .wrapper p {
   font-size: 0.85rem;
-  margin-top: 1rem;
 }
 
 .form {
@@ -132,4 +131,13 @@ textarea{
   width: 100%;
   padding: 0 10px;
   height: 100px;
+}
+
+.heading{
+  font-size: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
 }

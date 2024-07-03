@@ -34,6 +34,8 @@ export default function SignupPage() {
   }
 
   return (
+    <>
+    <h1 className='heading'>Connectify</h1>
     <div className="wrapper signUp">
       <div className="illustration">
         <img src="https://thumbs.dreamstime.com/b/happy-person-looking-smartphone-hand-reading-message-surfing-internet-smiling-man-holding-mobile-phone-scrolling-social-287236446.jpg" alt="illustration" />
@@ -74,5 +76,6 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+    </>
   );
 }

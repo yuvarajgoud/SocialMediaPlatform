@@ -35,7 +35,7 @@ const Comment = ({postId}) => {
   }
   async function handleDelete(commentId){
     const res = await axios.delete(`http://localhost:3000/api/posts/${postId}/comments/${commentId}`)
-    setComments(res.data);
+    setComments(res.data)
   }
   return (
     <div className="comments-container">
@@ -47,7 +47,7 @@ const Comment = ({postId}) => {
           </div>
           {comment.userId === user.userId ? (
             <button className="delete-button" onClick={() => handleDelete(comment._id)}>
-            ❌
+            Delete
           </button>
           ) : (<div></div>)}
         </div>
