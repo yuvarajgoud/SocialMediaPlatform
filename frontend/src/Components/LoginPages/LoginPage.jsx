@@ -66,6 +66,9 @@ export default function Login() {
 						Submit
 					</button>
 				</form>
+				<h2 align="center" className="or">
+            OR
+        </h2>
 				<p>
 					Don't have an account ? <Link to="/signup"> Sign Up </Link>
 				</p>

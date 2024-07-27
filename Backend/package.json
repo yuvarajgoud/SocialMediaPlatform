@@ -2,12 +2,13 @@
   "name": "jpmc_project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
+    "build" : "npm i && node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Yuvaraj Goud",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

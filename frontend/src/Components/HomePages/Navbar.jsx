@@ -30,9 +30,9 @@ const Navbar = () => {
           <li className="nav-item">
             <Link to="/protected/create" className="nav-link">Create</Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/protected/home" className="nav-link">Explore</Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link to="/protected/profile" className="nav-link">Profile</Link>
           </li>
